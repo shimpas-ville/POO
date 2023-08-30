@@ -1,15 +1,19 @@
-import java.util.Stack;
-
+import java.util.*;
 public class ItemVenda {
 
+    private Random rdm;
     private int codigo;
     private Produto produto;
     private double precoUnitarioCobrado;
     private int quantidade;
+    Stack produtos;
 
     public ItemVenda(Produto produto, int quantidade){
         this.produto=produto;
         this.quantidade=quantidade;
+        precoUnitarioCobrado=produto.getPrecoUnitario();
+        rdm = new Random(1000000);
+        codigo = rdm.nextInt();
         produtos = new Stack<>();
         for(int i=0; i<quantidade; i++){
             produtos.push(produto);
@@ -17,23 +21,24 @@ public class ItemVenda {
     }
 
     public double getValorItem() {
-        return 0;
+        double valor = quantidade*precoUnitarioCobrado;
+        return valor;
     }
 
     public int getCodigo() {
-        return 0;
+        return codigo;
     }
 
     public Produto getProduto() {
-        return null;
+        return produto;
     }
 
     public double getPrecoUnitarioCobrado() {
-        return 0;
+        return precoUnitarioCobrado;
     }
 
     public int getQuantidade() {
-        return 0;
+        return quantidade;
     }
 
 }

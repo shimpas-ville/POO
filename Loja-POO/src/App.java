@@ -64,6 +64,9 @@ public class App {
                    break;
                case 3:
                    break;
+               case 4:
+                   System.out.println("Fim");
+                       break;
                default:
                    System.out.println("Erro");
                    break;
@@ -79,7 +82,7 @@ public class App {
     public static void menuF(){
         System.out.println("1- Inserir\tum produto no estoque\n" +
                 "2- Inserir\tum\tproduto\tno\tcatálogo\n" +
-                "3- Remover um produto do catálogo"+
+                "3- Remover um produto do catálogo\n"+
                 "4- voltar");
     }
 
