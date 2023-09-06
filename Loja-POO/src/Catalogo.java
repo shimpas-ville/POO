@@ -2,7 +2,6 @@ import java.util.*;
 public class Catalogo {
 
     private List<Produto> produtos;
-    private Produto produto;
 
     public Catalogo(){
         produtos = new ArrayList<>();
@@ -16,9 +15,8 @@ public class Catalogo {
         return null;
     }
 
-    public boolean cadastra(Produto produto) {
+    public void cadastra(Produto produto) {
         produtos.add(produto);
-        return false;
     }
 
     public boolean remove(int codigo) {
@@ -33,7 +31,7 @@ public class Catalogo {
 
     public void Imprime(){
         for (Produto p : produtos) {
-            System.out.println(p + " : " + p.getCodigo()+ "\n");
+            System.out.println(p);
         }
     }
 

@@ -27,7 +27,7 @@ public class App {
                            String description = in.next();
                            System.out.println("Digite o preço unitário do produto: ");
                            double precoUnit = in.nextDouble();
-                           System.out.println("Digite o preço unitário do produto: ");
+                           System.out.println("Digite a quantia do produto: ");
                            int quantia = in.nextInt();
                            Produto p = new Produto(cod, description, precoUnit);
                            ItemEstoque item = new ItemEstoque(p,quantia);
