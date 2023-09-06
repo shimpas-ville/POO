@@ -1,11 +1,11 @@
 import java.util.*;
 public class Catalogo {
 
-    private Stack<Produto> produtos;
+    private List<Produto> produtos;
     private Produto produto;
 
     public Catalogo(){
-        produtos = new Stack<>();
+        produtos = new ArrayList<>();
     }
     public Produto consulta(int codigo) {
         for (Produto produto : produtos) {
@@ -17,7 +17,7 @@ public class Catalogo {
     }
 
     public boolean cadastra(Produto produto) {
-        produtos.push(produto);
+        produtos.add(produto);
         return false;
     }
 
@@ -29,5 +29,15 @@ public class Catalogo {
             }
         }
         return false;
+    }
+
+    public void Imprime(){
+        for (Produto p : produtos) {
+            System.out.println(p + " : " + p.getCodigo()+ "\n");
+        }
+    }
+
+    public List<Produto> getProdutos(){
+        return produtos;
     }
 }

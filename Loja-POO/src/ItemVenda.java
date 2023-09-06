@@ -12,8 +12,7 @@ public class ItemVenda {
         this.produto=produto;
         this.quantidade=quantidade;
         precoUnitarioCobrado=produto.getPrecoUnitario();
-        rdm = new Random(1000000);
-        codigo = rdm.nextInt();
+        codigo = produto.getCodigo();
         produtos = new Stack<>();
         for(int i=0; i<quantidade; i++){
             produtos.push(produto);

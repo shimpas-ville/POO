@@ -3,19 +3,21 @@ import java.util.Stack;
 
 public class Venda {
 
-    private Random rdm;
+    Random rdm = new Random();
     private Stack<ItemVenda> itens;
     private int numero;
     private double valor;
 
 
     public Venda(){
-        itens=new Stack<>();
-        rdm = new Random(1000000);
-        numero = rdm.nextInt();
+        itens = new Stack<>();
+        numero = rdm.nextInt(10000000);
     }
 
     public double getDesconto() {
+        if(itens.size()>=10) {
+            return valor * 0.1;
+        }
         return 0;
     }
 
@@ -23,8 +25,13 @@ public class Venda {
         return 0;
     }
 
+    public Stack<ItemVenda> getItens(){
+        return itens;
+    }
     public double getTotalVenda() {
-
+        for (ItemVenda item: itens) {
+            valor= valor+item.getValorItem();
+        }
         return valor;
     }
 
@@ -32,12 +39,14 @@ public class Venda {
         itens.push(item);
     }
 
-    public void removeItem(int numero) {
-
-    }
-
-    public boolean fecha() {
-        return false;
+    public ItemVenda removeItem(int numero) {
+        for (ItemVenda item : itens) {
+            if(item.getCodigo()==numero){
+                itens.remove(item);
+                return item;
+            }
+        }
+        return null;
     }
 
     public double getSubtotal() {
@@ -49,7 +58,12 @@ public class Venda {
     }
 
     public int getNumero() {
-        return 0;
+        return numero;
     }
 
+    public void getProdutos(){
+        for (ItemVenda item : itens) {
+            System.out.println("Produto : "+item.getProduto()+" Quantidade : "+item.getQuantidade()+" Código : "+item.getCodigo());
+        }
+    }
 }

@@ -21,11 +21,24 @@ public class Estoque {
     }
 
     public boolean baixaEstoque(int codigo, int quantidade) {
+        for (ItemEstoque item : itens) {
+            if(item.getCodigo()==codigo){
+                for(int i=0; i<quantidade;i++){
+                    itens.remove(item);
+                }
+            }
+        }
         return false;
     }
 
-    public boolean repoeEstoque(int codigo, int quantidade) {
-        return false;
+    public void repoeEstoque(int codigo, int quantidade) {
+        for (ItemEstoque item : itens) {
+            if(item.getCodigo()==codigo){
+                for(int i=0; i<quantidade;i++){
+                    itens.push(item);
+                }
+            }
+        }
     }
 
 }

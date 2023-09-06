@@ -1,11 +1,12 @@
+import java.util.*;
 public class Historico {
 
-    private Venda vendas[];
+    private Stack<Venda> vendas;
 
     private Venda venda;
 
-    public boolean insere(Venda venda) {
-        return false;
+    public void insere(Venda venda) {
+
     }
 
     public Venda[] getUltimasVendas(int n) {
