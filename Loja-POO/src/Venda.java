@@ -22,12 +22,18 @@ public class Venda {
     }
 
     public double getImposto() {
-        return 0;
+        double subtotal = getTotalVenda();
+        double imposto;
+
+        imposto = subtotal * 0.25;
+
+        return imposto;
     }
 
     public Stack<ItemVenda> getItens(){
         return itens;
     }
+
     public double getTotalVenda() {
         for (ItemVenda item: itens) {
             valor= valor+item.getValorItem();

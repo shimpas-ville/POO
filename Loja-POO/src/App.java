@@ -71,18 +71,30 @@ public class App {
                                System.out.println("\n");
                                System.out.println("Digite o código do produto a ser adicionado: ");
                                int cod = in.nextInt();
+
+                               double subtotal = 0;
+
                                for (Produto p  : catalogo.getProdutos()) {
                                    if(p.getCodigo()==cod){
                                        System.out.println("Quantas unidades deseja adicionar? ");
                                        int q = in.nextInt();
                                        ItemVenda item = new ItemVenda(p,q);
-                                       venda = new Venda();
                                        venda.insereItem(item);
                                        estoque.baixaEstoque(p.getCodigo(),q);
                                    }else{
                                        System.out.println("Não há produto com tal código");
                                    }
                                }
+
+                               double desconto = venda.getDesconto();
+                               double imposto = venda.getImposto();
+                               double totalVenda = subtotal - (desconto * subtotal) + (imposto * subtotal);
+
+                               System.out.println("Desconto: " + (desconto * subtotal));
+                               System.out.println("Imposto: " + (imposto * subtotal));
+                               System.out.println("Total da venda: " + totalVenda);
+                               //historico.insere(venda);
+                               //System.out.println("Venda fechada");
                                break;
                            case 2:
                                venda.getProdutos();
