@@ -108,9 +108,10 @@ public class App {
                                System.out.println("Venda fechada");
                                break;
                            case 4:
+                               System.out.println("Saindo do Menu Cliente");
                                break;
                            default:
-                               System.out.println("Erro");
+                               System.out.println("Número inválido");
                                break;
                        }
                    } while (opt != 4);
@@ -121,7 +122,27 @@ public class App {
                        op = in.nextInt();
                        switch (op) {
                            case 1:
+                               List<Venda> ultimasVendas = historico.getUltimasVendas();
+                               System.out.println("Últimas 5 vendas: ");
+                               for (Venda venda:ultimasVendas) {
+                                   // arrumar
+                                   System.out.println("Número: " + venda.getNumero() + "\nProduto: " + venda.getProdutos() + "\nValor: " + venda.getTotalVenda());
+                               }
+                               break;
 
+                           case 2:
+                               System.out.println("Digite o número do recibo: ");
+                               int numero = in.nextInt();
+                               System.out.println(historico.getVendaRecibo(numero));
+                               break;
+
+                           case 3:
+                               System.out.println("Saindo do Menu Gerente");
+                               break;
+
+                           default:
+                               System.out.println("Número inválido");
+                               break;
                        }
                    } while (op != 3);
                    break;
