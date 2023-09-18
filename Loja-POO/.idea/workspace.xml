@@ -45,7 +45,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;copyright&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -77,6 +77,10 @@
       <workItem from="1694464823667" duration="707000" />
       <workItem from="1694883800396" duration="851000" />
       <workItem from="1694969759227" duration="635000" />
+      <workItem from="1694990091927" duration="122000" />
+      <workItem from="1695069454816" duration="1387000" />
+      <workItem from="1695070883622" duration="1271000" />
+      <workItem from="1695072185577" duration="519000" />
     </task>
     <servers />
   </component>
@@ -89,6 +93,10 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.util.ConcurrentModificationException" package="java.util" />
+          <option name="timeStamp" value="2" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -6,7 +6,7 @@ public class Venda {
     Random rdm = new Random();
     private Stack<ItemVenda> itens;
     private int numero;
-    private double valor;
+    private double valor=0;
 
 
     public Venda(){
@@ -35,7 +35,7 @@ public class Venda {
     }
 
     public double getTotalVenda() {
-        for (ItemVenda item: itens) {
+        for (ItemVenda item : itens) {
             valor= valor+item.getValorItem();
         }
         return valor;
@@ -53,10 +53,6 @@ public class Venda {
             }
         }
         return null;
-    }
-
-    public double getSubtotal() {
-        return 0;
     }
 
     public boolean imprimeRecibo() {

@@ -1,7 +1,6 @@
 import java.util.*;
 public class ItemVenda {
 
-    private Random rdm;
     private int codigo;
     private Produto produto;
     private double precoUnitarioCobrado;

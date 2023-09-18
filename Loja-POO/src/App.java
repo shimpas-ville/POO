@@ -37,7 +37,7 @@ public class App {
                            System.out.println("Digite o código do produto: ");
                            int codigo = in.nextInt();
                            System.out.println("Digite a descrição do produto: ");
-                           String descricao = in.nextLine();
+                           String descricao = in.next();
                            System.out.println("Digite o preço unitário do produto: ");
                            double precoUnitario = in.nextDouble();
                            Produto prod = new Produto(codigo, descricao, precoUnitario);
@@ -58,9 +58,9 @@ public class App {
                } while (opcao != 4);
                    break;
                case 2:
+                   Venda venda=null;
                    do {
                        menuC();
-                       Venda venda= new Venda();
                        opt = in.nextInt();
                        switch (opt) {
 
@@ -79,8 +79,9 @@ public class App {
                                        System.out.println("Quantas unidades deseja adicionar? ");
                                        int q = in.nextInt();
                                        ItemVenda item = new ItemVenda(p,q);
+                                       venda= new Venda();
                                        venda.insereItem(item);
-                                       estoque.baixaEstoque(p.getCodigo(),q);
+                                     //estoque.baixaEstoque(p.getCodigo(),q);
                                    }else{
                                        System.out.println("Não há produto com tal código");
                                    }
@@ -88,10 +89,10 @@ public class App {
 
                                double desconto = venda.getDesconto();
                                double imposto = venda.getImposto();
-                               double totalVenda = subtotal - (desconto * subtotal) + (imposto * subtotal);
+                               double totalVenda = venda.getTotalVenda() - (desconto * venda.getTotalVenda()) + (imposto * venda.getTotalVenda());
 
-                               System.out.println("Desconto: " + (desconto * subtotal));
-                               System.out.println("Imposto: " + (imposto * subtotal));
+                               System.out.println("Desconto: " + (desconto * totalVenda));
+                               System.out.println("Imposto: " + (imposto * totalVenda));
                                System.out.println("Total da venda: " + totalVenda);
                                //historico.insere(venda);
                                //System.out.println("Venda fechada");
@@ -101,7 +102,7 @@ public class App {
                                System.out.println("Digite o código do item a ser excluído: ");
                                int c = in.nextInt();
                                venda.removeItem(c);
-                               estoque.repoeEstoque(c, venda.removeItem(c).getQuantidade());
+                               //estoque.repoeEstoque(c, venda.removeItem(c).getQuantidade());
                                break;
                            case 3:
                                historico.insere(venda);
@@ -124,9 +125,10 @@ public class App {
                            case 1:
                                List<Venda> ultimasVendas = historico.getUltimasVendas();
                                System.out.println("Últimas 5 vendas: ");
-                               for (Venda venda:ultimasVendas) {
+                               for (Venda venda1:ultimasVendas) {
                                    // arrumar
-                                   System.out.println("Número: " + venda.getNumero() + "\nProduto: " + venda.getProdutos() + "\nValor: " + venda.getTotalVenda());
+                                   System.out.print("Número: " + venda1.getNumero() + "\nValor: " + venda1.getTotalVenda()+ "Produto: ");
+                                   venda1.getProdutos();
                                }
                                break;
 
