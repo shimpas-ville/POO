@@ -1,32 +1,25 @@
 import java.util.*;
 public class ItemEstoque {
-
     private int codigo;
     private Produto produto;
-    private int quantidade;
-    private Estoque estoque;
-    Stack<Produto> produtos;
+    private int quantidadeEmEstoque;
 
-    public ItemEstoque(Produto produto, int quantidade){
-        this.produto=produto;
-        this.quantidade=quantidade;
-        produtos = new Stack<>();
-        for(int i=0; i<quantidade; i++){
-            produtos.push(produto);
-        }
-        codigo=produto.getCodigo();
+    public ItemEstoque(Produto produto, int quantidadeEmEstoque){
+        this.produto = produto;
+        this.quantidadeEmEstoque = quantidadeEmEstoque;
+        codigo = produto.getCodigo();
     }
+
     public Produto getProduto() {
         return produto;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public int getQuantidadeEmEstoque() {
+        return quantidadeEmEstoque;
     }
 
-    public int getCodigo(){
+    public int getCodigo() {
         return codigo;
     }
-
 }
 

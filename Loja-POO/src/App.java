@@ -1,184 +1,198 @@
 import java.util.*;
 public class App {
 
-
-
     public static void main(String args[]){
        Scanner in = new Scanner(System.in);
-       Catalogo catalogo = new Catalogo();
-       Estoque estoque = new Estoque();
+        Catalogo catalogo = new Catalogo();
+        Estoque estoque = new Estoque(catalogo);
        Historico historico = new Historico();
-       int opcao=-1;
-       int option=-1;
-       int opt=-1;
-       int op=-1;
+        Stack<Venda> pilhaVendas = new Stack<>();
+
+       int opcao = 0;
+       int option = 0;
+       int op = 0;
+       int escolha = 0;
+
        do {
-           menu1();
+           menu();
            option=in.nextInt();
-           switch (option){
-               case 1: do {
-                   menuF();
-                   opcao = in.nextInt();
-                   switch (opcao) {
-                       case 1:
-                           System.out.println("Digite o código do produto: ");
-                           int cod = in.nextInt();
-                           System.out.println("Digite a descrição do produto: ");
-                           String description = in.next();
-                           System.out.println("Digite o preço unitário do produto: ");
-                           double precoUnit = in.nextDouble();
-                           System.out.println("Digite a quantia do produto: ");
-                           int quantia = in.nextInt();
-                           Produto p = new Produto(cod, description, precoUnit);
-                           ItemEstoque item = new ItemEstoque(p,quantia);
-                           estoque.add(item);
-                           break;
-                       case 2:
-                           System.out.println("Digite o código do produto: ");
-                           int codigo = in.nextInt();
-                           System.out.println("Digite a descrição do produto: ");
-                           String descricao = in.next();
-                           System.out.println("Digite o preço unitário do produto: ");
-                           double precoUnitario = in.nextDouble();
-                           Produto prod = new Produto(codigo, descricao, precoUnitario);
-                           catalogo.cadastra(prod);
-                           break;
-                       case 3:
-                           System.out.println("Digite o código do produto: ");
-                           int codigo2 = in.nextInt();
-                           catalogo.remove(codigo2);
-                           break;
-                       case 4:
-                           System.out.println("Saindo");
-                           break;
-                       default:
-                           System.out.println("Erro");
-                           break;
-                   }
-               } while (opcao != 4);
-                   break;
-               case 2:
-                   Venda venda=null;
+           switch (option) {
+               case 1 -> {
+                   do {
+                       menuF();
+                       opcao = in.nextInt();
+                       switch (opcao) {
+                           case 1 -> {
+                               System.out.println("Digite o código do produto: ");
+                               int cod = in.nextInt();
+                               System.out.println("Digite a descrição do produto: ");
+                               String description = in.next();
+                               System.out.println("Digite o preço unitário do produto: ");
+                               double precoUnit = in.nextDouble();
+                               System.out.println("Digite a quantidade em estoque do produto: ");
+                               int quantia = in.nextInt();
+
+                               Produto p = new Produto(cod, description, precoUnit);
+                               catalogo.cadastra(p, quantia);
+                           }
+                           case 2 -> {
+                               System.out.println("Digite o código do produto: ");
+                               int codigo2 = in.nextInt();
+                               System.out.println("Digite a quantidade que deseja remover: ");
+                               int quant = in.nextInt();
+                               catalogo.remove(codigo2);
+                               estoque.baixaEstoque(codigo2, quant);
+                           }
+                           case 3 -> System.out.print(" ");
+                           default -> System.out.println("Opção inválida");
+                       }
+                   } while (opcao != 3);
+               }
+               case 2 -> {
+                   Venda venda = new Venda();
+                   ArrayList<ItemVenda> itensVenda = new ArrayList<>();
+                   int numVenda = (pilhaVendas.size() + 1);
+                   boolean continuarAdicionando = true;
                    do {
                        menuC();
-                       opt = in.nextInt();
-                       switch (opt) {
+                       System.out.println("Digite a opção desejada: ");
+                       escolha = in.nextInt();
 
-                           case 1:
-                               System.out.println("------NOVA VENDA------");
-                               System.out.println("Catálogo de itens:\n");
-                               catalogo.Imprime();
-                               System.out.println("\n");
-                               System.out.println("Digite o código do produto a ser adicionado: ");
-                               int cod = in.nextInt();
+                       if (escolha == 1) {
+                           System.out.println("Catálogo de itens:\n");
+                           catalogo.Imprime();
+                           System.out.println("\n");
+                           System.out.println("Digite o código do produto a ser adicionado: ");
+                           int cod = in.nextInt();
+                           double subtotal = 0;
 
-                               double subtotal = 0;
+                           List<ItemEstoque> itensEstoque = catalogo.getItensEstoque();
+                           boolean produtoEncontrado = false;
 
-                               for (Produto p  : catalogo.getProdutos()) {
-                                   if(p.getCodigo()==cod){
-                                       System.out.println("Quantas unidades deseja adicionar? ");
-                                       int q = in.nextInt();
-                                       ItemVenda item = new ItemVenda(p,q);
-                                       venda= new Venda();
-                                       venda.insereItem(item);
-                                     //estoque.baixaEstoque(p.getCodigo(),q);
-                                   }else{
-                                       System.out.println("Não há produto com tal código");
-                                   }
+                           for (ItemEstoque item : itensEstoque) {
+                               Produto p = item.getProduto();
+                               if (p.getCodigo() == cod) {
+                                   System.out.println("Quantas unidades deseja adicionar? ");
+                                   int q = in.nextInt();
+                                   ItemVenda itemVenda = new ItemVenda(p, q);
+                                   venda.insereItem(itemVenda);
+                                   estoque.baixaEstoque(p.getCodigo(), q);
+                                   System.out.println("Produto adicionado ao carrinho.");
+
+                                   System.out.println("Item: " + itemVenda.getProduto().getDescricao());
+                                   System.out.println("Quantidade: " + itemVenda.getQuantidade());
+                                   System.out.println("Subtotal item: R$" + itemVenda.getValorItem());
+                                   System.out.println("Desconto: R$" + itemVenda.getDesconto());
+                                   System.out.println("Imposto: " + itemVenda.getImposto());
+                                   System.out.println("Total item: " + (itemVenda.getValorItem() + itemVenda.getImposto() - itemVenda.getDesconto()));
+
+                                   produtoEncontrado = true;
+                                   break;
                                }
+                           }
 
-                               double desconto = venda.getDesconto();
-                               double imposto = venda.getImposto();
-                               double totalVenda = venda.getTotalVenda() - (desconto * venda.getTotalVenda()) + (imposto * venda.getTotalVenda());
+                           if (!produtoEncontrado) {
+                               System.out.println("Não há produto com tal código");
+                           }
 
-                               System.out.println("Desconto: " + (desconto * totalVenda));
-                               System.out.println("Imposto: " + (imposto * totalVenda));
-                               System.out.println("Total da venda: " + totalVenda);
-                               //historico.insere(venda);
-                               //System.out.println("Venda fechada");
-                               break;
-                           case 2:
+                           System.out.println("Total da venda: " + venda.getTotalVenda());
+
+                       } else if (escolha == 2) {
+                           if (!itensVenda.isEmpty()) {
                                venda.getProdutos();
                                System.out.println("Digite o código do item a ser excluído: ");
                                int c = in.nextInt();
-                               venda.removeItem(c);
-                               //estoque.repoeEstoque(c, venda.removeItem(c).getQuantidade());
-                               break;
-                           case 3:
-                               historico.insere(venda);
-                               System.out.println("Venda fechada");
-                               break;
-                           case 4:
-                               System.out.println("Saindo do Menu Cliente");
-                               break;
-                           default:
-                               System.out.println("Número inválido");
-                               break;
-                       }
-                   } while (opt != 4);
-                   break;
-               case 3:
+                               boolean removedItem = venda.removeItem(c);
+                               if (removedItem) {
+                                   estoque.repoeEstoque(c, Estoque.getQuantidade(c));
+                                   itensVenda.removeIf(item -> item.getCodigo() == c);
+                                   System.out.println("Item removido do carrinho.");
+                               } else {
+                                   System.out.println("Item não encontrado no carrinho.");
+                               }
+                           } else {
+                               System.out.println("Não há produtos no carrinho.");
+                           }
+                       } else if (escolha == 3) {
+                           continuarAdicionando = false;
+                           venda.imprimeRecibo();
+                       } else if (escolha == 4)
+                           System.out.print(" ");
+                       else
+                           System.out.println("Opção inválida");
+                   } while (escolha != 4 && escolha != 3);
+               }
+               case 3 -> {
                    do {
                        menuG();
                        op = in.nextInt();
                        switch (op) {
-                           case 1:
+                           case 1 -> {
                                List<Venda> ultimasVendas = historico.getUltimasVendas();
                                System.out.println("Últimas 5 vendas: ");
-                               for (Venda venda1:ultimasVendas) {
+                               for (Venda venda1 : ultimasVendas) {
                                    // arrumar
-                                   System.out.print("Número: " + venda1.getNumero() + "\nValor: " + venda1.getTotalVenda()+ "Produto: ");
+                                   System.out.print("Número: " + venda1.getNumero() + "\nValor: " + venda1.getTotalVenda() + "Produto: ");
                                    venda1.getProdutos();
                                }
-                               break;
-
-                           case 2:
+                           }
+                           case 2 -> {
                                System.out.println("Digite o número do recibo: ");
                                int numero = in.nextInt();
                                System.out.println(historico.getVendaRecibo(numero));
-                               break;
-
-                           case 3:
-                               System.out.println("Saindo do Menu Gerente");
-                               break;
-
-                           default:
-                               System.out.println("Número inválido");
-                               break;
+                           }
+                           case 3 -> System.out.println("Saindo do Menu Gerente");
+                           default -> System.out.println("Número inválido");
                        }
                    } while (op != 3);
-                   break;
-               case 4:
-                   System.out.println("Fim");
-                       break;
-               default:
-                   System.out.println("Erro");
-                   break;
+               }
+               case 4 -> System.out.println("Fim");
+               default -> System.out.println("Erro");
            }
 
-       }while(option!= 4);
+       }while(option!= 4 && escolha!=3);
     }
 
-    public static void menu1(){
-        System.out.println("1- Fornecedor\n2- Cliente\n3- Gerente\n4- Sair");
+    public static void menu(){
+        String mensagem = """
+                ==== MENU PRINCIPAL ====
+                Por favor identifique-se:
+                1 - Fornecedor
+                2 - Cliente
+                3 - Gerente
+                4 - Sair
+                """;
+        System.out.println(mensagem);
     }
 
     public static void menuF(){
-        System.out.println("1- Inserir\tum produto no estoque\n" +
-                "2- Inserir\tum\tproduto\tno\tcatálogo\n" +
-                "3- Remover um produto do catálogo\n"+
-                "4- Voltar");
+        String mensagem = """
+                ==== MENU FORNECEDOR ====
+                1 - Inserir produto no estoque
+                2 - Remover produto do estoque
+                3 - Voltar
+                """;
+        System.out.println(mensagem);
     }
 
     public static void menuC(){
-        System.out.println("1- Abrir\tuma\tvenda\n"+"2- Remover\tum\titem\tde\tvenda\n" +
-                "3- Fechar\tuma\tvenda\n"+
-                "4- Voltar");
+        String mensagem = """
+                ==== MENU CLIENTE ====
+                1 - Adicionar produto ao carrinho
+                2 - Remover produto do carrinho
+                3 - Fechar pedido
+                4 - Sair
+                """;
+        System.out.println(mensagem);
     }
 
     public static void menuG(){
-        System.out.println("1- Listar\tas\túltimas\t5\tvendas\n" +
-                "2- Listar\tuma\tvenda\t(pelo\tnúmero\tdo\trecibo)\n"+
-                "3- Voltar");
+        String mensagem = """
+                ==== MENU GERÊNCIA ====
+                1 - Listar últimas 5 vendas
+                2 - Procurar venda por número de recibo
+                3 - Voltar
+                """;
+        System.out.println(mensagem);
     }
 }

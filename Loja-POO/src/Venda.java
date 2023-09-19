@@ -1,71 +1,96 @@
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 
 public class Venda {
-
-    Random rdm = new Random();
-    private Stack<ItemVenda> itens;
+    private Random rdm = new Random();
+    private List<ItemVenda> itens = new ArrayList<>();
     private int numero;
-    private double valor=0;
+    private double totalVenda;
 
 
-    public Venda(){
-        itens = new Stack<>();
+    public Venda() {
         numero = rdm.nextInt(10000000);
+        totalVenda = 0;
     }
 
-    public double getDesconto() {
-        if(itens.size()>=10) {
-            return valor * 0.1;
-        }
-        return 0;
-    }
-
-    public double getImposto() {
-        double subtotal = getTotalVenda();
-        double imposto;
-
-        imposto = subtotal * 0.25;
-
-        return imposto;
-    }
-
-    public Stack<ItemVenda> getItens(){
+    public List<ItemVenda> getItens() {
         return itens;
     }
 
     public double getTotalVenda() {
+        double valor = 0;
+        double descontoTotal = 0;
+        double impostoTotal = 0;
+
         for (ItemVenda item : itens) {
-            valor= valor+item.getValorItem();
+            valor += item.getValorItem();
+            descontoTotal += item.getDesconto();
+            impostoTotal += item.getImposto();
         }
-        return valor;
+
+        return valor + impostoTotal - descontoTotal;
     }
 
     public void insereItem(ItemVenda item) {
-        itens.push(item);
+        itens.add(item);
     }
 
-    public ItemVenda removeItem(int numero) {
-        for (ItemVenda item : itens) {
-            if(item.getCodigo()==numero){
-                itens.remove(item);
-                return item;
+    public boolean removeItem(int codigo) {
+        Iterator<ItemVenda> iterator = itens.iterator();
+        while (iterator.hasNext()) {
+            ItemVenda item = iterator.next();
+            if (item.getCodigo() == codigo) {
+                iterator.remove();
+                return true;
             }
         }
-        return null;
-    }
-
-    public boolean imprimeRecibo() {
         return false;
-    }
-
-    public int getNumero() {
-        return numero;
     }
 
     public void getProdutos(){
         for (ItemVenda item : itens) {
             System.out.println("Produto : "+item.getProduto()+" Quantidade : "+item.getQuantidade()+" Código : "+item.getCodigo());
         }
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+
+    public void imprimeRecibo() {
+
+        double subtotal = 0;
+        double impostoTotal = 0;
+        double descontoTotal = 0;
+        double valor = 0;
+
+        System.out.println("=======================================");
+        System.out.println("Recibo da Venda #" + numero);
+
+        for (ItemVenda item : itens) {
+
+            System.out.println("---------------------------------------");
+            System.out.println("Descrição do Produto: " + item.getDescricao());
+            System.out.println("Código do Produto: " + item.getCodigo());
+            System.out.println("Preço Unitário: R$" + item.getPrecoUnitario());
+            System.out.println("Quantidade: " + item.getQuantidade());
+            System.out.println("Subtotal: R$" + item.getValorItem());
+            System.out.println("Desconto do Item: R$" + item.getDesconto());
+            System.out.println("Imposto do Item: R$" + item.getImposto());
+            System.out.println("Total a pagar: R$" + (item.getValorItem() + item.getImposto() - item.getDesconto()));
+
+            subtotal += item.getValorItem();
+            impostoTotal += item.getImposto();
+            descontoTotal += item.getDesconto();
+            valor += (item.getValorItem() + item.getImposto() - item.getDesconto());
+
+        }
+
+        System.out.println("=======================================");
+        System.out.println("SUBTOTAL: R$" + subtotal);
+        System.out.println("IMPOSTO COBRADO: R$" + impostoTotal);
+        System.out.println("DESCONTO APLICADO: R$" + descontoTotal);
+        System.out.println("TOTAL A PAGAR: R$" + valor);
+        System.out.println("=======================================");
     }
 }

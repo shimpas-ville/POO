@@ -1,38 +1,44 @@
-import java.util.*;
 public class ItemVenda {
-
-    private int codigo;
     private Produto produto;
-    private double precoUnitarioCobrado;
+    private double precoUnitario;
     private int quantidade;
-    Stack produtos;
 
-    public ItemVenda(Produto produto, int quantidade){
-        this.produto=produto;
-        this.quantidade=quantidade;
-        precoUnitarioCobrado=produto.getPrecoUnitario();
-        codigo = produto.getCodigo();
-        produtos = new Stack<>();
-        for(int i=0; i<quantidade; i++){
-            produtos.push(produto);
-        }
+    public ItemVenda(Produto produto, int quantidade) {
+        this.produto = produto;
+        this.quantidade = quantidade;
+        this.precoUnitario = produto.getPrecoUnitario();
     }
 
     public double getValorItem() {
-        double valor = quantidade*precoUnitarioCobrado;
-        return valor;
+        return quantidade * precoUnitario;
+    }
+
+    public double getDesconto() {
+        if (precoUnitario > 250) {
+            return quantidade * precoUnitario * 0.1;
+        } else {
+            return 0;
+        }
+    }
+
+    public double getImposto() {
+        return quantidade * precoUnitario * 0.25;
+    }
+
+    public String getDescricao() {
+        return produto.getDescricao();
     }
 
     public int getCodigo() {
-        return codigo;
+        return produto.getCodigo();
     }
 
     public Produto getProduto() {
         return produto;
     }
 
-    public double getPrecoUnitarioCobrado() {
-        return precoUnitarioCobrado;
+    public double getPrecoUnitario() {
+        return precoUnitario;
     }
 
     public int getQuantidade() {
@@ -40,3 +46,4 @@ public class ItemVenda {
     }
 
 }
+
