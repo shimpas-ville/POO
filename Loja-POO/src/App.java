@@ -50,7 +50,7 @@ public class App {
                }
                case 2 -> {
                    Venda venda = new Venda();
-                   ArrayList<ItemVenda> itensVenda = new ArrayList<>();
+                   //ArrayList<ItemVenda> itensVenda = new ArrayList<>();
                    int numVenda = (pilhaVendas.size() + 1);
                    boolean continuarAdicionando = true;
                    do {
@@ -98,14 +98,14 @@ public class App {
                            System.out.println("Total da venda: " + venda.getTotalVenda());
 
                        } else if (escolha == 2) {
-                           if (!itensVenda.isEmpty()) {
+                           if (!venda.getItens().isEmpty()) {
                                venda.getProdutos();
                                System.out.println("Digite o código do item a ser excluído: ");
                                int c = in.nextInt();
                                boolean removedItem = venda.removeItem(c);
                                if (removedItem) {
                                    estoque.repoeEstoque(c, Estoque.getQuantidade(c));
-                                   itensVenda.removeIf(item -> item.getCodigo() == c);
+                                   //itensVenda.removeIf(item -> item.getCodigo() == c);
                                    System.out.println("Item removido do carrinho.");
                                } else {
                                    System.out.println("Item não encontrado no carrinho.");
@@ -116,11 +116,12 @@ public class App {
                        } else if (escolha == 3) {
                            continuarAdicionando = false;
                            venda.imprimeRecibo();
+                           escolha=4;
                        } else if (escolha == 4)
                            System.out.print(" ");
                        else
                            System.out.println("Opção inválida");
-                   } while (escolha != 4 && escolha != 3);
+                   } while (escolha != 4 /*&& escolha != 3*/);
                }
                case 3 -> {
                    do {
@@ -156,7 +157,7 @@ public class App {
     public static void menu(){
         String mensagem = """
                 ==== MENU PRINCIPAL ====
-                Por favor identifique-se:
+                Por favor, identifique-se:
                 1 - Fornecedor
                 2 - Cliente
                 3 - Gerente

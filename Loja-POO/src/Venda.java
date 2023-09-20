@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Venda {
     private Random rdm = new Random();
-    private List<ItemVenda> itens = new ArrayList<>();
+    private List<ItemVenda> itens;
     private int numero;
     private double totalVenda;
 
@@ -10,6 +10,7 @@ public class Venda {
     public Venda() {
         numero = rdm.nextInt(10000000);
         totalVenda = 0;
+        itens = new ArrayList<>();
     }
 
     public List<ItemVenda> getItens() {
