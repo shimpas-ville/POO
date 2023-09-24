@@ -3,6 +3,10 @@ public class ItemVenda {
     private double precoUnitario;
     private int quantidade;
 
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
     public ItemVenda(Produto produto, int quantidade) {
         this.produto = produto;
         this.quantidade = quantidade;

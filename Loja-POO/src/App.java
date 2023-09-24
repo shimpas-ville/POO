@@ -25,8 +25,9 @@ public class App {
                            case 1 -> {
                                System.out.println("Digite o código do produto: ");
                                int cod = in.nextInt();
+                               in.nextLine();
                                System.out.println("Digite a descrição do produto: ");
-                               String description = in.next();
+                               String description = in.nextLine();
                                System.out.println("Digite o preço unitário do produto: ");
                                double precoUnit = in.nextDouble();
                                System.out.println("Digite a quantidade em estoque do produto: ");
@@ -50,7 +51,7 @@ public class App {
                }
                case 2 -> {
                    Venda venda = new Venda();
-                   //ArrayList<ItemVenda> itensVenda = new ArrayList<>();
+                   historico.insere(venda);
                    int numVenda = (pilhaVendas.size() + 1);
                    boolean continuarAdicionando = true;
                    do {
@@ -129,13 +130,8 @@ public class App {
                        op = in.nextInt();
                        switch (op) {
                            case 1 -> {
-                               List<Venda> ultimasVendas = historico.getUltimasVendas();
                                System.out.println("Últimas 5 vendas: ");
-                               for (Venda venda1 : ultimasVendas) {
-                                   // arrumar
-                                   System.out.print("Número: " + venda1.getNumero() + "\nValor: " + venda1.getTotalVenda() + "Produto: ");
-                                   venda1.getProdutos();
-                               }
+                               historico.getUltimasVendas();
                            }
                            case 2 -> {
                                System.out.println("Digite o número do recibo: ");

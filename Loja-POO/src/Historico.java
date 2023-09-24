@@ -1,38 +1,42 @@
 import java.util.*;
-public class Historico {
 
+public class Historico {
     private Stack<Venda> vendas;
 
-    private Venda venda;
+    public Historico() {
+        vendas = new Stack<>();
+    }
 
     public void insere(Venda venda) {
-
+        vendas.push(venda);
     }
 
-    public List<Venda> getUltimasVendas() {
+    public void getUltimasVendas() {
         int numVendas = Math.min(5, vendas.size());
-        List<Venda> ultimasVendas = new ArrayList<>();
 
-        if(numVendas == 0){
-            return null;
+        if (numVendas == 0) {
+            System.out.println("Não foram encontrados registros de venda.");
+            return;
         }
 
-        for (int i =0; i < numVendas; i++){
+        for (int i = 0; i < numVendas; i++) {
             Venda venda = vendas.get(vendas.size() - 1 - i);
-            ultimasVendas.add(venda);
+            venda.imprimeRecibo();
         }
 
-        return ultimasVendas;
+        if (numVendas < 5) {
+            System.out.println("Foi encontrado apenas " + numVendas + " registro(S) de venda(s).");
+            System.out.println(" ");
+        }
     }
 
-    public Venda getVendaRecibo(int numero){
-        for (Venda venda:vendas) {
-            if(numero == venda.getNumero()){
-                return venda;
+    public Venda getVendaRecibo(int numero) {
+        for (Venda venda : vendas) {
+            if (numero == venda.getNumero()) {
+                venda.imprimeRecibo();
             }
         }
         return null;
     }
-
 }
 

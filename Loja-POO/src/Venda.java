@@ -59,17 +59,30 @@ public class Venda {
 
 
     public void imprimeRecibo() {
-
         double subtotal = 0;
         double impostoTotal = 0;
         double descontoTotal = 0;
-        double valor = 0;
 
         System.out.println("=======================================");
         System.out.println("Recibo da Venda #" + numero);
 
-        for (ItemVenda item : itens) {
+        Map<Integer, ItemVenda> mapaItens = new HashMap<>();
 
+        for (ItemVenda item : itens) {
+            int codigoProduto = item.getCodigo();
+
+            // Verificar se o produto já existe no mapa pelo código do produto
+            if (mapaItens.containsKey(codigoProduto)) {
+                // Se existir, consolidar as quantidades e valores
+                ItemVenda itemExistente = mapaItens.get(codigoProduto);
+                itemExistente.setQuantidade(itemExistente.getQuantidade() + item.getQuantidade());
+            } else {
+                // Se não existir, adicionar o item ao mapa
+                mapaItens.put(codigoProduto, item);
+            }
+        }
+
+        for (ItemVenda item : mapaItens.values()) {
             System.out.println("---------------------------------------");
             System.out.println("Descrição do Produto: " + item.getDescricao());
             System.out.println("Código do Produto: " + item.getCodigo());
@@ -83,15 +96,13 @@ public class Venda {
             subtotal += item.getValorItem();
             impostoTotal += item.getImposto();
             descontoTotal += item.getDesconto();
-            valor += (item.getValorItem() + item.getImposto() - item.getDesconto());
-
         }
 
         System.out.println("=======================================");
         System.out.println("SUBTOTAL: R$" + subtotal);
         System.out.println("IMPOSTO COBRADO: R$" + impostoTotal);
         System.out.println("DESCONTO APLICADO: R$" + descontoTotal);
-        System.out.println("TOTAL A PAGAR: R$" + valor);
+        System.out.println("TOTAL A PAGAR: R$" + (subtotal + impostoTotal - descontoTotal));
         System.out.println("=======================================");
     }
 }

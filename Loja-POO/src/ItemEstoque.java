@@ -1,13 +1,12 @@
-import java.util.*;
 public class ItemEstoque {
     private int codigo;
     private Produto produto;
     private int quantidadeEmEstoque;
 
-    public ItemEstoque(Produto produto, int quantidadeEmEstoque){
+    public ItemEstoque(Produto produto, int quantidadeEmEstoque) {
         this.produto = produto;
         this.quantidadeEmEstoque = quantidadeEmEstoque;
-        codigo = produto.getCodigo();
+        this.codigo = produto.getCodigo();
     }
 
     public Produto getProduto() {
@@ -20,6 +19,10 @@ public class ItemEstoque {
 
     public int getCodigo() {
         return codigo;
+    }
+
+    public void setQuantidadeEmEstoque(int novaQuantidade) {
+        quantidadeEmEstoque = novaQuantidade;
     }
 }
 

@@ -38,7 +38,6 @@ public class Catalogo {
             System.out.println("Item: " + produto.getDescricao());
             System.out.println("Código do produto: " + produto.getCodigo());
             System.out.println("Preço Unitário: R$" + produto.getPrecoUnitario());
-            System.out.println("Quantidade em estoque: " + item.getQuantidadeEmEstoque());
             System.out.println("==========================");
         }
     }

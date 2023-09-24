@@ -24,19 +24,20 @@ public class Estoque {
     }
 
     public boolean baixaEstoque(int codigo, int quantidade) {
-        List<ItemEstoque> itemsToRemove = new ArrayList<>();
+        boolean sucesso = false;
 
-        Iterator<ItemEstoque> iterator = itens.iterator();
-        while (iterator.hasNext()) {
-            ItemEstoque item = iterator.next();
+        for (ItemEstoque item : itens) {
             if (item.getCodigo() == codigo) {
-                for (int i = 0; i < quantidade; i++) {
-                    iterator.remove();
+                if (item.getQuantidadeEmEstoque() >= quantidade) {
+                    item.setQuantidadeEmEstoque(item.getQuantidadeEmEstoque() - quantidade);
+                    sucesso = true;
+                    catalogo.cadastra(item.getProduto(), quantidade);
                 }
-                catalogo.cadastra(item.getProduto(), quantidade);
+                break;
             }
         }
-        return !itemsToRemove.isEmpty();
+
+        return sucesso;
     }
 
     public void repoeEstoque(int codigo, int quantidade) {
