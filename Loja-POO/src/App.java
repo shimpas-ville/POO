@@ -123,6 +123,7 @@ public class App {
                            }
                        } else if (escolha == 3) {
                            continuarAdicionando = false;
+                           historico.insere(venda);
                            venda.imprimeRecibo();
                            escolha=4;
                        } else if (escolha == 4)
