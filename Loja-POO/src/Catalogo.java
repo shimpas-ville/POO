@@ -32,13 +32,31 @@ public class Catalogo {
         return false;
     }
 
+    public boolean remove2(int codigo){
+        boolean removido = false;
+        for (ItemEstoque item : itensEstoque) {
+            if(item.getCodigo()==codigo) {
+                itensEstoque.remove(item);
+                removido=true;
+            }
+        }
+        return removido;
+    }
+
     public void Imprime() {
         for (ItemEstoque item : itensEstoque) {
-            Produto produto = item.getProduto();
-            System.out.println("Item: " + produto.getDescricao());
-            System.out.println("Código do produto: " + produto.getCodigo());
-            System.out.println("Preço Unitário: R$" + produto.getPrecoUnitario());
-            System.out.println("==========================");
+            if(item.getQuantidadeEmEstoque()>0) {
+                Produto produto = item.getProduto();
+                System.out.println("Item: " + produto.getDescricao());
+                System.out.println("Código do produto: " + produto.getCodigo());
+                System.out.println("Preço Unitário: R$" + produto.getPrecoUnitario());
+                System.out.println("==========================");
+            }else{
+                Produto produto = item.getProduto();
+                System.out.println("Item: " + produto.getDescricao());
+                System.out.println("Código do produto: " + produto.getCodigo());
+                System.out.println("-X- ESGOTADO -X-");
+            }
         }
     }
 

@@ -2,11 +2,12 @@ import java.util.*;
 public class App {
 
     public static void main(String args[]){
-       Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
         Catalogo catalogo = new Catalogo();
         Estoque estoque = new Estoque(catalogo);
-       Historico historico = new Historico();
+        Historico historico = new Historico();
         Stack<Venda> pilhaVendas = new Stack<>();
+        Stack<ItemEstoque> itens = new Stack<>();
 
        int opcao = 0;
        int option = 0;
@@ -35,13 +36,16 @@ public class App {
 
                                Produto p = new Produto(cod, description, precoUnit);
                                catalogo.cadastra(p, quantia);
+                               ItemEstoque item = new ItemEstoque(p, quantia);
+                               estoque.add(item);
                            }
                            case 2 -> {
+                               estoque.Imprime();
                                System.out.println("Digite o código do produto: ");
                                int codigo2 = in.nextInt();
                                System.out.println("Digite a quantidade que deseja remover: ");
                                int quant = in.nextInt();
-                               catalogo.remove(codigo2);
+                               //catalogo.remove2(codigo2);
                                estoque.baixaEstoque(codigo2, quant);
                            }
                            case 3 -> System.out.print(" ");
@@ -61,7 +65,7 @@ public class App {
 
                        if (escolha == 1) {
                            System.out.println("Catálogo de itens:\n");
-                           catalogo.Imprime();
+                           estoque.Imprime();
                            System.out.println("\n");
                            System.out.println("Digite o código do produto a ser adicionado: ");
                            int cod = in.nextInt();
@@ -75,19 +79,22 @@ public class App {
                                if (p.getCodigo() == cod) {
                                    System.out.println("Quantas unidades deseja adicionar? ");
                                    int q = in.nextInt();
-                                   ItemVenda itemVenda = new ItemVenda(p, q);
-                                   venda.insereItem(itemVenda);
-                                   estoque.baixaEstoque(p.getCodigo(), q);
-                                   System.out.println("Produto adicionado ao carrinho.");
+                                   if(item.getQuantidadeEmEstoque()>q) {
+                                       ItemVenda itemVenda = new ItemVenda(p, q);
+                                        venda.insereItem(itemVenda);
+                                        estoque.baixaEstoque(p.getCodigo(), q);
 
-                                   System.out.println("Item: " + itemVenda.getProduto().getDescricao());
-                                   System.out.println("Quantidade: " + itemVenda.getQuantidade());
-                                   System.out.println("Subtotal item: R$" + itemVenda.getValorItem());
-                                   System.out.println("Desconto: R$" + itemVenda.getDesconto());
-                                   System.out.println("Imposto: " + itemVenda.getImposto());
-                                   System.out.println("Total item: " + (itemVenda.getValorItem() + itemVenda.getImposto() - itemVenda.getDesconto()));
+                                       System.out.println("Produto adicionado ao carrinho.");
 
-                                   produtoEncontrado = true;
+                                       System.out.println("Item: " + itemVenda.getProduto().getDescricao());
+                                       System.out.println("Quantidade: " + itemVenda.getQuantidade());
+                                       System.out.println("Subtotal item: R$" + itemVenda.getValorItem());
+                                       System.out.println("Desconto: R$" + itemVenda.getDesconto());
+                                       System.out.println("Imposto: " + itemVenda.getImposto());
+                                       System.out.println("Total item: " + (itemVenda.getValorItem() + itemVenda.getImposto() - itemVenda.getDesconto()));
+                                       produtoEncontrado = true;
+
+                                   }
                                    break;
                                }
                            }

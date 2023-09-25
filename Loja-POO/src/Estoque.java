@@ -7,7 +7,7 @@ public class Estoque {
     public Estoque(Catalogo catalogo){
         itens=new Stack<>();
         this.catalogo = catalogo;
-        this.itens = new Stack<>();
+        //this.itens = new Stack<>();
     }
 
     public void add(ItemEstoque item1){
@@ -32,6 +32,9 @@ public class Estoque {
                     item.setQuantidadeEmEstoque(item.getQuantidadeEmEstoque() - quantidade);
                     sucesso = true;
                     catalogo.cadastra(item.getProduto(), quantidade);
+                }else if(item.getQuantidadeEmEstoque()>0 && item.getQuantidadeEmEstoque()<quantidade){
+                    item.setQuantidadeEmEstoque(0);
+                    sucesso = true;
                 }
                 break;
             }
@@ -46,6 +49,23 @@ public class Estoque {
                 for(int i=0; i<quantidade;i++){
                     itens.push(item);
                 }
+            }
+        }
+    }
+
+    public void Imprime() {
+        for (ItemEstoque item : itens) {
+            if(item.getQuantidadeEmEstoque()>0) {
+                Produto produto = item.getProduto();
+                System.out.println("Item: " + produto.getDescricao());
+                System.out.println("Código do produto: " + produto.getCodigo());
+                System.out.println("Preço Unitário: R$" + produto.getPrecoUnitario());
+                System.out.println("==========================");
+            }else{
+                Produto produto = item.getProduto();
+                System.out.println("Item: " + produto.getDescricao());
+                System.out.println("Código do produto: " + produto.getCodigo());
+                System.out.println("-X- ESGOTADO -X-");
             }
         }
     }
