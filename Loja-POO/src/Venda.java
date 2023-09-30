@@ -4,17 +4,32 @@ public class Venda {
     private Random rdm = new Random();
     private List<ItemVenda> itens;
     private int numero;
-    private double totalVenda;
-
+    private double totalVenda, subtotal, desconto, imposto;
 
     public Venda() {
         numero = rdm.nextInt(10000000);
         totalVenda = 0;
+        subtotal = 0;
+        desconto = 0;
+        imposto = 0;
         itens = new ArrayList<>();
     }
 
     public List<ItemVenda> getItens() {
         return itens;
+    }
+
+
+    public double getSubtotal(){
+        return subtotal;
+    }
+
+    public double getDesconto(){
+        return desconto;
+    }
+
+    public double getImposto(){
+        return imposto;
     }
 
     public double getTotalVenda() {

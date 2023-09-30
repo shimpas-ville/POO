@@ -7,11 +7,16 @@ public class Estoque {
     public Estoque(CatalogoProduto catalogoProduto){
         itens = new ArrayList<>();
         this.catalogoProduto = catalogoProduto;
-        //this.itens = new Stack<>();
     }
 
-    public void add(ItemEstoque item1){
-        itens.add(item1);
+    public boolean insereProduto(ItemEstoque item){
+        for (ItemEstoque itemEstoque: itens) {
+            if(itemEstoque.getCodigo() == item.getCodigo()){
+                return false;
+            }
+        }
+        itens.add(item);
+        return true;
     }
 
     public static int getQuantidade(int codigo) {
@@ -43,14 +48,16 @@ public class Estoque {
         return sucesso;
     }
 
-    public void repoeEstoque(int codigo, int quantidade) {
+    public boolean repoeEstoque(int codigo, int quantidade) {
         for (ItemEstoque item : itens) {
-            if(item.getCodigo()==codigo){
-                for(int i=0; i<quantidade;i++){
+            if(item.getCodigo() == codigo){
+                for(int i = 0; i < quantidade;i++){
                     itens.add(item);
                 }
+                return true;
             }
         }
+        return false;
     }
 
     public void Imprime() {

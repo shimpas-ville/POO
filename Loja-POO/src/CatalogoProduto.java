@@ -19,11 +19,11 @@ public class CatalogoProduto {
         ItemEstoque itemEstoque = new ItemEstoque(produto, quantidadeEmEstoque);
         for (ItemEstoque item: itensEstoque) {
             if(produto.getCodigo() == item.getCodigo()){
-                itensEstoque.add(itemEstoque);
-                return true;
+                return false;
             }
         }
-        return false;
+        itensEstoque.add(itemEstoque);
+        return true;
     }
 
     public boolean remove(int codigo) {

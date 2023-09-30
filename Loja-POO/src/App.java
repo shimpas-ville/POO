@@ -37,7 +37,7 @@ public class App {
                                Produto p = new Produto(cod, description, precoUnit);
                                if(catalogoProduto.cadastra(p, quantia)){
                                    ItemEstoque item = new ItemEstoque(p, quantia);
-                                   estoque.add(item);
+                                   estoque.insereProduto(item);
                                }
 
                            }
