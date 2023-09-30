@@ -13,7 +13,7 @@ public class ItemEstoque {
         return produto;
     }
 
-    public int getQuantidadeEmEstoque() {
+    public int getQuantidade() {
         return quantidadeEmEstoque;
     }
 

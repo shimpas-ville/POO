@@ -3,8 +3,8 @@ public class App {
 
     public static void main(String args[]){
         Scanner in = new Scanner(System.in);
-        Catalogo catalogo = new Catalogo();
-        Estoque estoque = new Estoque(catalogo);
+        CatalogoProduto catalogoProduto = new CatalogoProduto();
+        Estoque estoque = new Estoque(catalogoProduto);
         Historico historico = new Historico();
         Stack<Venda> pilhaVendas = new Stack<>();
         Stack<ItemEstoque> itens = new Stack<>();
@@ -35,9 +35,11 @@ public class App {
                                int quantia = in.nextInt();
 
                                Produto p = new Produto(cod, description, precoUnit);
-                               catalogo.cadastra(p, quantia);
-                               ItemEstoque item = new ItemEstoque(p, quantia);
-                               estoque.add(item);
+                               if(catalogoProduto.cadastra(p, quantia)){
+                                   ItemEstoque item = new ItemEstoque(p, quantia);
+                                   estoque.add(item);
+                               }
+
                            }
                            case 2 -> {
                                estoque.Imprime();
@@ -71,7 +73,7 @@ public class App {
                            int cod = in.nextInt();
                            double subtotal = 0;
 
-                           List<ItemEstoque> itensEstoque = catalogo.getItensEstoque();
+                           List<ItemEstoque> itensEstoque = catalogoProduto.getItensEstoque();
                            boolean produtoEncontrado = false;
 
                            for (ItemEstoque item : itensEstoque) {
@@ -79,7 +81,7 @@ public class App {
                                if (p.getCodigo() == cod) {
                                    System.out.println("Quantas unidades deseja adicionar? ");
                                    int q = in.nextInt();
-                                   if(item.getQuantidadeEmEstoque()>q) {
+                                   if(item.getQuantidade()>q) {
                                        ItemVenda itemVenda = new ItemVenda(p, q);
                                         venda.insereItem(itemVenda);
                                         estoque.baixaEstoque(p.getCodigo(), q);

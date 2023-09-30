@@ -2,4 +2,4 @@
 - quando compramos um produto, devemos remover a quantidade desejada do estoque
 - ao buscar venda por recibo, mesmo que ache retorna null.
 - um cliente não deve poder adicionar um produto ao carrinho, se este nao tiver estoque o suficiente, ou se ja tiver sido comprado em outro pedido.
-- se um item estiver sem estoque, o catalogo deve mostrar que está indiponível e não deletá-lo
+- se um item estiver sem estoque, o catalogoProduto deve mostrar que está indiponível e não deletá-lo

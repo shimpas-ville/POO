@@ -1,9 +1,9 @@
 import java.util.*;
-public class Catalogo {
+public class CatalogoProduto {
 
     private List<ItemEstoque> itensEstoque;
 
-    public Catalogo() {
+    public CatalogoProduto() {
         itensEstoque = new ArrayList<>();
     }
     public Produto consulta(int codigo) {
@@ -15,9 +15,15 @@ public class Catalogo {
         return null;
     }
 
-    public void cadastra(Produto produto, int quantidadeEmEstoque) {
+    public boolean cadastra(Produto produto, int quantidadeEmEstoque) {
         ItemEstoque itemEstoque = new ItemEstoque(produto, quantidadeEmEstoque);
-        itensEstoque.add(itemEstoque);
+        for (ItemEstoque item: itensEstoque) {
+            if(produto.getCodigo() == item.getCodigo()){
+                itensEstoque.add(itemEstoque);
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean remove(int codigo) {
@@ -45,7 +51,7 @@ public class Catalogo {
 
     public void Imprime() {
         for (ItemEstoque item : itensEstoque) {
-            if(item.getQuantidadeEmEstoque()>0) {
+            if(item.getQuantidade()>0) {
                 Produto produto = item.getProduto();
                 System.out.println("Item: " + produto.getDescricao());
                 System.out.println("Código do produto: " + produto.getCodigo());

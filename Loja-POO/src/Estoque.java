@@ -1,23 +1,23 @@
 import java.util.*;
 public class Estoque {
 
-    private static Stack<ItemEstoque> itens;
-    private Catalogo catalogo;
+    private static ArrayList<ItemEstoque> itens;
+    private CatalogoProduto catalogoProduto;
 
-    public Estoque(Catalogo catalogo){
-        itens=new Stack<>();
-        this.catalogo = catalogo;
+    public Estoque(CatalogoProduto catalogoProduto){
+        itens = new ArrayList<>();
+        this.catalogoProduto = catalogoProduto;
         //this.itens = new Stack<>();
     }
 
     public void add(ItemEstoque item1){
-        itens.push(item1);
+        itens.add(item1);
     }
 
     public static int getQuantidade(int codigo) {
         for (ItemEstoque item : itens) {
             if(item.getProduto().getCodigo()==codigo){
-                return item.getQuantidadeEmEstoque();
+                return item.getQuantidade();
             }
         }
         return 0;
@@ -28,11 +28,11 @@ public class Estoque {
 
         for (ItemEstoque item : itens) {
             if (item.getCodigo() == codigo) {
-                if (item.getQuantidadeEmEstoque() >= quantidade) {
-                    item.setQuantidadeEmEstoque(item.getQuantidadeEmEstoque() - quantidade);
+                if (item.getQuantidade() >= quantidade) {
+                    item.setQuantidadeEmEstoque(item.getQuantidade() - quantidade);
                     sucesso = true;
-                    catalogo.cadastra(item.getProduto(), quantidade);
-                }else if(item.getQuantidadeEmEstoque()>0 && item.getQuantidadeEmEstoque()<quantidade){
+                    catalogoProduto.cadastra(item.getProduto(), quantidade);
+                }else if(item.getQuantidade()>0 && item.getQuantidade()<quantidade){
                     item.setQuantidadeEmEstoque(0);
                     sucesso = true;
                 }
@@ -47,7 +47,7 @@ public class Estoque {
         for (ItemEstoque item : itens) {
             if(item.getCodigo()==codigo){
                 for(int i=0; i<quantidade;i++){
-                    itens.push(item);
+                    itens.add(item);
                 }
             }
         }
@@ -55,7 +55,7 @@ public class Estoque {
 
     public void Imprime() {
         for (ItemEstoque item : itens) {
-            if(item.getQuantidadeEmEstoque()>0) {
+            if(item.getQuantidade()>0) {
                 Produto produto = item.getProduto();
                 System.out.println("Item: " + produto.getDescricao());
                 System.out.println("Código do produto: " + produto.getCodigo());
