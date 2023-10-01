@@ -102,7 +102,7 @@ public class App {
                            }
 
                            if (!produtoEncontrado) {
-                               System.out.println("Não há produto com tal código");
+                               System.out.println("Não foi possível completar a venda.");
                            }
 
                            System.out.println("Total da venda: " + venda.getTotalVenda());
