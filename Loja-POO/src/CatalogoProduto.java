@@ -6,6 +6,7 @@ public class CatalogoProduto {
 
     public CatalogoProduto() {
         catalogoProdutos = new ArrayList<>();
+        itensEstoque = new ArrayList<>();
     }
     public Produto consulta(int codigo) {
         for (Produto produto : catalogoProdutos) {
@@ -16,35 +17,37 @@ public class CatalogoProduto {
         return null;
     }
 
-    public boolean cadastra(Produto produto) {
+    public boolean cadastra(Produto produto, int quantidadeEmEstoque) {
         for (Produto p : catalogoProdutos) {
             if (p.getCodigo() == produto.getCodigo()) {
                 return false;
             }
         }
         catalogoProdutos.add(produto);
+        ItemEstoque item = new ItemEstoque(produto,quantidadeEmEstoque);
+        itensEstoque.add(item);
         return true;
     }
 
-    private int consultaQuantidadeEmEstoque(int codigo) {
+    public Produto consultaQuantidadeEmEstoque(int codigo) {
         for (ItemEstoque item : itensEstoque) {
             if (item.getProduto().getCodigo() == codigo) {
-                return item.getQuantidade();
+                return item.getProduto();
             }
         }
-        return 0;
+        return null;
     }
 
     public void imprime() {
-        for (Produto produto : catalogoProdutos) {
-            int quantidadeEmEstoque = consultaQuantidadeEmEstoque(produto.getCodigo());
-            if (quantidadeEmEstoque > 0) {
+        for (ItemEstoque item : itensEstoque) {
+            if(item.getQuantidade()>0) {
+                Produto produto = item.getProduto();
                 System.out.println("Item: " + produto.getDescricao());
                 System.out.println("Código do produto: " + produto.getCodigo());
                 System.out.println("Preço Unitário: R$" + produto.getPrecoUnitario());
-                System.out.println("Quantidade em Estoque: " + quantidadeEmEstoque);
                 System.out.println("==========================");
-            } else {
+            }else{
+                Produto produto = item.getProduto();
                 System.out.println("Item: " + produto.getDescricao());
                 System.out.println("Código do produto: " + produto.getCodigo());
                 System.out.println("-X- ESGOTADO -X-");
@@ -55,4 +58,5 @@ public class CatalogoProduto {
     public List<ItemEstoque> getItensEstoque() {
         return itensEstoque;
     }
+
 }

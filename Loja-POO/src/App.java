@@ -35,13 +35,14 @@ public class App {
                                int quantia = in.nextInt();
 
                                Produto p = new Produto(cod, description, precoUnit);
-                               catalogoProduto.cadastra(p);
+                               catalogoProduto.cadastra(p, quantia);
                                ItemEstoque item = new ItemEstoque(p, quantia);
                                estoque.insereProduto(item);
 
+
                            }
                            case 2 -> {
-                               estoque.Imprime();
+                               estoque.imprime();
                                System.out.println("Digite o código do produto: ");
                                int codigo2 = in.nextInt();
                                System.out.println("Digite a quantidade que deseja remover: ");

@@ -16,6 +16,7 @@ public class Estoque {
             }
         }
         itens.add(item);
+        catalogoProduto.cadastra(item.getProduto(), 0);
         return true;
     }
 
@@ -36,8 +37,7 @@ public class Estoque {
                 if (item.getQuantidade() >= quantidade) {
                     item.setQuantidadeEmEstoque(item.getQuantidade() - quantidade);
                     sucesso = true;
-                    catalogoProduto.cadastra(item.getProduto());
-                }else if(item.getQuantidade()>0 && item.getQuantidade()<quantidade){
+                } else if (item.getQuantidade() > 0 && item.getQuantidade() < quantidade) {
                     item.setQuantidadeEmEstoque(0);
                     sucesso = true;
                 }
@@ -47,6 +47,7 @@ public class Estoque {
 
         return sucesso;
     }
+
 
     public boolean repoeEstoque(int codigo, int quantidade) {
         for (ItemEstoque item : itens) {
@@ -60,7 +61,7 @@ public class Estoque {
         return false;
     }
 
-    public void Imprime() {
+    public void imprime() {
         for (ItemEstoque item : itens) {
             if(item.getQuantidade()>0) {
                 Produto produto = item.getProduto();
