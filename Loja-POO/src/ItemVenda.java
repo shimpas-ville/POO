@@ -1,16 +1,20 @@
+import java.util.Enumeration;
+
 public class ItemVenda {
+    private int numero;
     private Produto produto;
     private double precoUnitario;
     private int quantidade;
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public ItemVenda(Produto produto, int quantidade) {
+    public ItemVenda(int numero, Produto produto, int quantidade) {
+        this.numero = numero;
         this.produto = produto;
         this.quantidade = quantidade;
         this.precoUnitario = produto.getPrecoUnitario();
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 
     public double getValorItem() {
@@ -33,15 +37,15 @@ public class ItemVenda {
         return produto.getDescricao();
     }
 
-    public int getCodigo() {
-        return produto.getCodigo();
+    public int getNumero() {
+        return numero;
     }
 
     public Produto getProduto() {
         return produto;
     }
 
-    public double getPrecoUnitario() {
+    public double getPrecoUnitarioCobrado() {
         return precoUnitario;
     }
 

@@ -1,11 +1,11 @@
 public class ItemEstoque {
-    private int codigo;
     private Produto produto;
-    private int quantidadeEmEstoque;
+    private int quantidade;
+    private int codigo;
 
     public ItemEstoque(Produto produto, int quantidadeEmEstoque) {
         this.produto = produto;
-        this.quantidadeEmEstoque = quantidadeEmEstoque;
+        this.quantidade = quantidadeEmEstoque;
         this.codigo = produto.getCodigo();
     }
 
@@ -14,7 +14,7 @@ public class ItemEstoque {
     }
 
     public int getQuantidade() {
-        return quantidadeEmEstoque;
+        return quantidade;
     }
 
     public int getCodigo() {
@@ -22,7 +22,7 @@ public class ItemEstoque {
     }
 
     public void setQuantidadeEmEstoque(int novaQuantidade) {
-        quantidadeEmEstoque = novaQuantidade;
+        quantidade = novaQuantidade;
     }
 }
 

@@ -36,7 +36,7 @@ public class Estoque {
                 if (item.getQuantidade() >= quantidade) {
                     item.setQuantidadeEmEstoque(item.getQuantidade() - quantidade);
                     sucesso = true;
-                    catalogoProduto.cadastra(item.getProduto(), quantidade);
+                    catalogoProduto.cadastra(item.getProduto());
                 }else if(item.getQuantidade()>0 && item.getQuantidade()<quantidade){
                     item.setQuantidadeEmEstoque(0);
                     sucesso = true;
@@ -67,6 +67,7 @@ public class Estoque {
                 System.out.println("Item: " + produto.getDescricao());
                 System.out.println("Código do produto: " + produto.getCodigo());
                 System.out.println("Preço Unitário: R$" + produto.getPrecoUnitario());
+                System.out.println("Quantidade em estoque: " + item.getQuantidade());
                 System.out.println("==========================");
             }else{
                 Produto produto = item.getProduto();

@@ -1,64 +1,50 @@
 import java.util.*;
 public class CatalogoProduto {
 
+    private List<Produto> catalogoProdutos;
     private List<ItemEstoque> itensEstoque;
 
     public CatalogoProduto() {
-        itensEstoque = new ArrayList<>();
+        catalogoProdutos = new ArrayList<>();
     }
     public Produto consulta(int codigo) {
-        for (ItemEstoque item : itensEstoque) {
-            if (item.getProduto().getCodigo() == codigo) {
-                return item.getProduto();
+        for (Produto produto : catalogoProdutos) {
+            if (produto.getCodigo() == codigo) {
+                return produto;
             }
         }
         return null;
     }
 
-    public boolean cadastra(Produto produto, int quantidadeEmEstoque) {
-        ItemEstoque itemEstoque = new ItemEstoque(produto, quantidadeEmEstoque);
-        for (ItemEstoque item: itensEstoque) {
-            if(produto.getCodigo() == item.getCodigo()){
+    public boolean cadastra(Produto produto) {
+        for (Produto p : catalogoProdutos) {
+            if (p.getCodigo() == produto.getCodigo()) {
                 return false;
             }
         }
-        itensEstoque.add(itemEstoque);
+        catalogoProdutos.add(produto);
         return true;
     }
 
-    public boolean remove(int codigo) {
-        Iterator<ItemEstoque> iterator = itensEstoque.iterator();
-        while (iterator.hasNext()) {
-            ItemEstoque item = iterator.next();
+    private int consultaQuantidadeEmEstoque(int codigo) {
+        for (ItemEstoque item : itensEstoque) {
             if (item.getProduto().getCodigo() == codigo) {
-                iterator.remove();
-                return true;
+                return item.getQuantidade();
             }
         }
-        return false;
+        return 0;
     }
 
-    public boolean remove2(int codigo){
-        boolean removido = false;
-        for (ItemEstoque item : itensEstoque) {
-            if(item.getCodigo()==codigo) {
-                itensEstoque.remove(item);
-                removido=true;
-            }
-        }
-        return removido;
-    }
-
-    public void Imprime() {
-        for (ItemEstoque item : itensEstoque) {
-            if(item.getQuantidade()>0) {
-                Produto produto = item.getProduto();
+    public void imprime() {
+        for (Produto produto : catalogoProdutos) {
+            int quantidadeEmEstoque = consultaQuantidadeEmEstoque(produto.getCodigo());
+            if (quantidadeEmEstoque > 0) {
                 System.out.println("Item: " + produto.getDescricao());
                 System.out.println("Código do produto: " + produto.getCodigo());
                 System.out.println("Preço Unitário: R$" + produto.getPrecoUnitario());
+                System.out.println("Quantidade em Estoque: " + quantidadeEmEstoque);
                 System.out.println("==========================");
-            }else{
-                Produto produto = item.getProduto();
+            } else {
                 System.out.println("Item: " + produto.getDescricao());
                 System.out.println("Código do produto: " + produto.getCodigo());
                 System.out.println("-X- ESGOTADO -X-");
