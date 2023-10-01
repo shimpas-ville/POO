@@ -46,15 +46,16 @@ public class Venda {
         return valor + impostoTotal - descontoTotal;
     }
 
-    public void insereItem(ItemVenda item) {
-        itens.add(item);
+    public boolean insereItem(Produto produto, int quant) {
+        ItemVenda item = new ItemVenda(produto.getCodigo(), produto, quant);
+        return itens.add(item);
     }
 
     public boolean removeItem(int codigo) {
         Iterator<ItemVenda> iterator = itens.iterator();
         while (iterator.hasNext()) {
             ItemVenda item = iterator.next();
-            if (item.getCodigo() == codigo) {
+            if (item.getNumero() == codigo) {
                 iterator.remove();
                 return true;
             }
@@ -62,9 +63,22 @@ public class Venda {
         return false;
     }
 
+    public boolean fecha(Estoque estoque){
+        if (itens.isEmpty())
+            return false;
+        else {
+            for (ItemVenda item : itens) {
+                int codigoProduto = item.getProduto().getCodigo();
+                int quantidadeVendida = item.getQuantidade();
+                estoque.baixaEstoque(codigoProduto, quantidadeVendida);
+            }
+            return true;
+        }
+    }
+
     public void getProdutos(){
         for (ItemVenda item : itens) {
-            System.out.println("Produto : "+item.getProduto()+" Quantidade : "+item.getQuantidade()+" Código : "+item.getCodigo());
+            System.out.println("Produto : "+item.getProduto()+" Quantidade : "+item.getQuantidade()+" Código : "+item.getNumero());
         }
     }
 
@@ -84,15 +98,12 @@ public class Venda {
         Map<Integer, ItemVenda> mapaItens = new HashMap<>();
 
         for (ItemVenda item : itens) {
-            int codigoProduto = item.getCodigo();
+            int codigoProduto = item.getNumero();
 
-            // Verificar se o produto já existe no mapa pelo código do produto
             if (mapaItens.containsKey(codigoProduto)) {
-                // Se existir, consolidar as quantidades e valores
                 ItemVenda itemExistente = mapaItens.get(codigoProduto);
                 itemExistente.setQuantidade(itemExistente.getQuantidade() + item.getQuantidade());
             } else {
-                // Se não existir, adicionar o item ao mapa
                 mapaItens.put(codigoProduto, item);
             }
         }
@@ -100,8 +111,8 @@ public class Venda {
         for (ItemVenda item : mapaItens.values()) {
             System.out.println("---------------------------------------");
             System.out.println("Descrição do Produto: " + item.getDescricao());
-            System.out.println("Código do Produto: " + item.getCodigo());
-            System.out.println("Preço Unitário: R$" + item.getPrecoUnitario());
+            System.out.println("Código do Produto: " + item.getNumero());
+            System.out.println("Preço Unitário: R$" + item.getPrecoUnitarioCobrado());
             System.out.println("Quantidade: " + item.getQuantidade());
             System.out.println("Subtotal: R$" + item.getValorItem());
             System.out.println("Desconto do Item: R$" + item.getDesconto());

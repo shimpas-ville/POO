@@ -5,7 +5,7 @@ public class App {
         Scanner in = new Scanner(System.in);
         CatalogoProduto catalogoProduto = new CatalogoProduto();
         Estoque estoque = new Estoque(catalogoProduto);
-        Historico historico = new Historico();
+        HistoricoVendas historico = new HistoricoVendas();
         Stack<Venda> pilhaVendas = new Stack<>();
         Stack<ItemEstoque> itens = new Stack<>();
 
@@ -35,10 +35,9 @@ public class App {
                                int quantia = in.nextInt();
 
                                Produto p = new Produto(cod, description, precoUnit);
-                               if(catalogoProduto.cadastra(p, quantia)){
-                                   ItemEstoque item = new ItemEstoque(p, quantia);
-                                   estoque.insereProduto(item);
-                               }
+                               catalogoProduto.cadastra(p);
+                               ItemEstoque item = new ItemEstoque(p, quantia);
+                               estoque.insereProduto(item);
 
                            }
                            case 2 -> {
@@ -59,7 +58,6 @@ public class App {
                    Venda venda = new Venda();
                    historico.insere(venda);
                    int numVenda = (pilhaVendas.size() + 1);
-                   boolean continuarAdicionando = true;
                    do {
                        menuC();
                        System.out.println("Digite a opção desejada: ");
@@ -67,9 +65,9 @@ public class App {
 
                        if (escolha == 1) {
                            System.out.println("Catálogo de itens:\n");
-                           estoque.Imprime();
+                           catalogoProduto.imprime();
                            System.out.println("\n");
-                           System.out.println("Digite o código do produto a ser adicionado: ");
+                           System.out.println("Digite o código do produto que deseja adicionar ao carrinho: ");
                            int cod = in.nextInt();
                            double subtotal = 0;
 
@@ -78,12 +76,13 @@ public class App {
 
                            for (ItemEstoque item : itensEstoque) {
                                Produto p = item.getProduto();
-                               if (p.getCodigo() == cod) {
+                               int num = p.getCodigo();
+                               if (num == cod) {
                                    System.out.println("Quantas unidades deseja adicionar? ");
                                    int q = in.nextInt();
                                    if(item.getQuantidade()>q) {
-                                       ItemVenda itemVenda = new ItemVenda(p, q);
-                                        venda.insereItem(itemVenda);
+                                       ItemVenda itemVenda = new ItemVenda(num, p, q);
+                                        venda.insereItem(p, q);
                                         estoque.baixaEstoque(p.getCodigo(), q);
 
                                        System.out.println("Produto adicionado ao carrinho.");
@@ -124,10 +123,15 @@ public class App {
                                System.out.println("Não há produtos no carrinho.");
                            }
                        } else if (escolha == 3) {
-                           continuarAdicionando = false;
-                           historico.insere(venda);
-                           venda.imprimeRecibo();
-                           escolha=4;
+                           if (historico.insere(venda)) {
+                               venda.fecha(estoque);
+                               venda.imprimeRecibo();
+                               escolha = 4;
+                           }
+                           else {
+                               System.out.println("Erro ao fechar pedido.");
+                           }
+
                        } else if (escolha == 4)
                            System.out.print(" ");
                        else
@@ -140,7 +144,7 @@ public class App {
                        op = in.nextInt();
                        switch (op) {
                            case 1 -> {
-                               System.out.println("Últimas 5 vendas: ");
+                               System.out.println("Últimas vendas: ");
                                historico.getUltimasVendas();
                            }
                            case 2 -> {
