@@ -47,7 +47,6 @@ public class App {
                                int codigo2 = in.nextInt();
                                System.out.println("Digite a quantidade que deseja remover: ");
                                int quant = in.nextInt();
-                               //catalogo.remove2(codigo2);
                                estoque.baixaEstoque(codigo2, quant);
                            }
                            case 3 -> System.out.print(" ");
@@ -57,7 +56,6 @@ public class App {
                }
                case 2 -> {
                    Venda venda = new Venda();
-                   historico.insere(venda);
                    int numVenda = (pilhaVendas.size() + 1);
                    do {
                        menuC();
@@ -70,7 +68,6 @@ public class App {
                            System.out.println("\n");
                            System.out.println("Digite o código do produto que deseja adicionar ao carrinho: ");
                            int cod = in.nextInt();
-                           double subtotal = 0;
 
                            List<ItemEstoque> itensEstoque = catalogoProduto.getItensEstoque();
                            boolean produtoEncontrado = false;
@@ -79,9 +76,10 @@ public class App {
                                Produto p = item.getProduto();
                                int num = p.getCodigo();
                                if (num == cod) {
+                                   produtoEncontrado = true;
                                    System.out.println("Quantas unidades deseja adicionar? ");
                                    int q = in.nextInt();
-                                   if(item.getQuantidade()>q) {
+                                   if(item.getQuantidade()>=q) {
                                        ItemVenda itemVenda = new ItemVenda(num, p, q);
                                         venda.insereItem(p, q);
                                         estoque.baixaEstoque(p.getCodigo(), q);
@@ -94,8 +92,6 @@ public class App {
                                        System.out.println("Desconto: R$" + itemVenda.getDesconto());
                                        System.out.println("Imposto: " + itemVenda.getImposto());
                                        System.out.println("Total item: " + (itemVenda.getValorItem() + itemVenda.getImposto() - itemVenda.getDesconto()));
-                                       produtoEncontrado = true;
-
                                    }
                                    break;
                                }
@@ -115,7 +111,6 @@ public class App {
                                boolean removedItem = venda.removeItem(c);
                                if (removedItem) {
                                    estoque.repoeEstoque(c, Estoque.getQuantidade(c));
-                                   //itensVenda.removeIf(item -> item.getCodigo() == c);
                                    System.out.println("Item removido do carrinho.");
                                } else {
                                    System.out.println("Item não encontrado no carrinho.");
@@ -124,14 +119,10 @@ public class App {
                                System.out.println("Não há produtos no carrinho.");
                            }
                        } else if (escolha == 3) {
-                           if (historico.insere(venda)) {
-                               venda.fecha(estoque);
-                               venda.imprimeRecibo();
-                               escolha = 4;
-                           }
-                           else {
-                               System.out.println("Erro ao fechar pedido.");
-                           }
+                           historico.insere(venda);
+                           venda.fecha(estoque);
+                           venda.imprimeRecibo();
+                           escolha = 4;
 
                        } else if (escolha == 4)
                            System.out.print(" ");
@@ -146,7 +137,11 @@ public class App {
                        switch (op) {
                            case 1 -> {
                                System.out.println("Últimas vendas: ");
-                               historico.getUltimasVendas();
+                               List<Venda> ultimasVendas = historico.getUltimasVendas();
+
+                               for (Venda venda : ultimasVendas) {
+                                   System.out.println(historico.getVendaRecibo(venda.getNumero()));
+                               }
                            }
                            case 2 -> {
                                System.out.println("Digite o número do recibo: ");
@@ -201,7 +196,7 @@ public class App {
     public static void menuG(){
         String mensagem = """
                 ==== MENU GERÊNCIA ====
-                1 - Listar últimas 5 vendas
+                1 - Listar últimas vendas
                 2 - Procurar venda por número de recibo
                 3 - Voltar
                 """;

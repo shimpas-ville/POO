@@ -40,16 +40,14 @@ public class CatalogoProduto {
 
     public void imprime() {
         for (ItemEstoque item : itensEstoque) {
-            if(item.getQuantidade()>0) {
-                Produto produto = item.getProduto();
-                System.out.println("Item: " + produto.getDescricao());
-                System.out.println("Código do produto: " + produto.getCodigo());
-                System.out.println("Preço Unitário: R$" + produto.getPrecoUnitario());
+            Produto produto = item.getProduto();
+            System.out.println("Item: " + produto.getDescricao());
+            System.out.println("Código do produto: " + produto.getCodigo());
+            System.out.println("Preço Unitário: R$" + produto.getPrecoUnitario());
+
+            if (item.getQuantidade() > 0) {
                 System.out.println("==========================");
-            }else{
-                Produto produto = item.getProduto();
-                System.out.println("Item: " + produto.getDescricao());
-                System.out.println("Código do produto: " + produto.getCodigo());
+            } else {
                 System.out.println("-X- ESGOTADO -X-");
             }
         }

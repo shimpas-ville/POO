@@ -1,5 +1,4 @@
-- arrumar a disponibilidade dos produtos no estoque
-- quando compramos um produto, devemos remover a quantidade desejada do estoque
-- ao buscar venda por recibo, mesmo que ache retorna null.
-- um cliente não deve poder adicionar um produto ao carrinho, se este nao tiver estoque o suficiente, ou se ja tiver sido comprado em outro pedido.
-- se um item estiver sem estoque, o catalogoProduto deve mostrar que está indiponível e não deletá-lo
+- fiz o catalogo separado do estoque pra poder fazer do jeito que o sor queria e apaguei os metodos de remover item do catalogo porque não precisa;
+- fiz as alterações necessárias, porém:
+- adicionei o getVenda, mas ele nunca é usado, pois estamos usando o getVendaRecibo;
+- Não sabia o que era o numero em ItemVenda, então assumi que fosse o código do produto;

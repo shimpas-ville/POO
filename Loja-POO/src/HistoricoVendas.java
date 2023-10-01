@@ -17,24 +17,19 @@ public class HistoricoVendas {
         if (numVendas == 0) {
             System.out.println("Não foram encontrados registros de venda.");
             return Collections.emptyList();
+        } else {
+            System.out.println("Foram encontrados " + numVendas + " registro(s) de venda(s).");
+            System.out.println(" ");
+
+            return new ArrayList<>(vendas);
         }
-
-        List<Venda> ultimasVendas = new ArrayList<>();
-        for (int i = 0; i < numVendas; i++) {
-            Venda venda = vendas.get(numVendas - 1 - i);
-            ultimasVendas.add(venda);
-        }
-
-        System.out.println("Foram encontrados " + numVendas + " registro(s) de venda(s).");
-        System.out.println(" ");
-
-        return ultimasVendas;
     }
 
     public Venda getVendaRecibo(int numero) {
         for (Venda venda : vendas) {
             if (numero == venda.getNumero()) {
                 venda.imprimeRecibo();
+                return venda; // Retorna a venda encontrada
             }
         }
         return null;
@@ -49,4 +44,9 @@ public class HistoricoVendas {
         return null;
     }
 }
+
+
+
+
+
 
