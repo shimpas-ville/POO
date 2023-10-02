@@ -22,7 +22,6 @@ public class ItemEstoque {
     }
 
     public void setQuantidadeEmEstoque(int novaQuantidade) {
-
         quantidade = novaQuantidade;
     }
 }

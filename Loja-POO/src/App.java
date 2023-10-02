@@ -48,6 +48,7 @@ public class App {
                                System.out.println("Digite a quantidade que deseja remover: ");
                                int quant = in.nextInt();
                                estoque.baixaEstoque(codigo2, quant);
+                               catalogoProduto.baixaCatalogo(codigo2, quant);
                            }
                            case 3 -> System.out.print(" ");
                            default -> System.out.println("Opção inválida");
@@ -55,6 +56,7 @@ public class App {
                    } while (opcao != 3);
                }
                case 2 -> {
+                   int r=0;
                    Venda venda = new Venda();
                    int numVenda = (pilhaVendas.size() + 1);
                    do {
@@ -83,6 +85,8 @@ public class App {
                                        ItemVenda itemVenda = new ItemVenda(num, p, q);
                                         venda.insereItem(p, q);
                                         estoque.baixaEstoque(p.getCodigo(), q);
+                                        catalogoProduto.baixaCatalogo(p.getCodigo(), q);
+                                        r=q;
 
                                        System.out.println("Produto adicionado ao carrinho.");
 
@@ -110,7 +114,8 @@ public class App {
                                int c = in.nextInt();
                                boolean removedItem = venda.removeItem(c);
                                if (removedItem) {
-                                   estoque.repoeEstoque(c, Estoque.getQuantidade(c));
+                                   estoque.repoeEstoque(c, r);
+                                   catalogoProduto.repoeCatalogo(c, r);
                                    System.out.println("Item removido do carrinho.");
                                } else {
                                    System.out.println("Item não encontrado no carrinho.");

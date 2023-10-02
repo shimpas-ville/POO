@@ -18,13 +18,19 @@ public class CatalogoProduto {
     }
 
     public boolean cadastra(Produto produto, int quantidadeEmEstoque) {
-        for (Produto p : catalogoProdutos) {
-            if (p.getCodigo() == produto.getCodigo()) {
-                return false;
+
+//        for (Produto p : catalogoProdutos) {
+//            if (p.getCodigo() == produto.getCodigo()) {
+//            }
+//        }
+        for (ItemEstoque item : itensEstoque) {
+            if (item.getProduto().getCodigo() == produto.getCodigo()) {
+                item.setQuantidadeEmEstoque(item.getQuantidade()+quantidadeEmEstoque);
+                return true;
             }
         }
-        catalogoProdutos.add(produto);
         ItemEstoque item = new ItemEstoque(produto,quantidadeEmEstoque);
+        catalogoProdutos.add(produto);
         itensEstoque.add(item);
         return true;
     }
@@ -55,6 +61,35 @@ public class CatalogoProduto {
 
     public List<ItemEstoque> getItensEstoque() {
         return itensEstoque;
+    }
+
+    public boolean baixaCatalogo(int codigo, int quantidade) {
+        boolean sucesso = false;
+
+        for (ItemEstoque item : itensEstoque) {
+            if (item.getCodigo() == codigo) {
+                if (item.getQuantidade() >= quantidade) {
+                    item.setQuantidadeEmEstoque(item.getQuantidade() - quantidade);
+                    sucesso = true;
+                } else if (item.getQuantidade() > 0 && item.getQuantidade() < quantidade) {
+                    item.setQuantidadeEmEstoque(0);
+                    sucesso = true;
+                }
+                break;
+            }
+        }
+
+        return sucesso;
+    }
+
+    public boolean repoeCatalogo(int codigo, int quantidade) {
+        for (ItemEstoque item : itensEstoque) {
+            if(item.getCodigo() == codigo){
+                item.setQuantidadeEmEstoque(item.getQuantidade()+quantidade);
+                return true;
+            }
+        }
+        return false;
     }
 
 }

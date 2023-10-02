@@ -12,7 +12,9 @@ public class Estoque {
     public boolean insereProduto(ItemEstoque item){
         for (ItemEstoque itemEstoque: itens) {
             if(itemEstoque.getCodigo() == item.getCodigo()){
-                return false;
+                int quantidade = itemEstoque.getQuantidade();
+                itemEstoque.setQuantidadeEmEstoque(itemEstoque.getQuantidade()+quantidade);
+                return true;
             }
         }
         itens.add(item);
@@ -52,9 +54,7 @@ public class Estoque {
     public boolean repoeEstoque(int codigo, int quantidade) {
         for (ItemEstoque item : itens) {
             if(item.getCodigo() == codigo){
-                for(int i = 0; i < quantidade;i++){
-                    itens.add(item);
-                }
+                item.setQuantidadeEmEstoque(item.getQuantidade()+quantidade);
                 return true;
             }
         }
